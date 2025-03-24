@@ -1,0 +1,193 @@
+{
+    "users": [
+        {
+            "id": "550e8400-e29b-41d4-a716-446655440000",
+            "full_name": "John Doe",
+            "email": "john.doe@example.com",
+            "password_hash": "hashedpassword123",
+            "dob": "1990-01-01",
+            "phone": "+1234567890",
+            "location": "New York, USA",
+            "preferences": {
+                "notifications": true,
+                "theme": "dark"
+            },
+            "profile_picture": "https://example.com/profile.jpg",
+            "created_at": "2023-10-01T12:00:00Z",
+            "updated_at": "2023-10-01T12:00:00Z"
+        },
+        {
+            "id": "550e8400-e29b-41d4-a716-446655440001",
+            "full_name": "Jane Smith",
+            "email": "jane.smith@example.com",
+            "password_hash": "hashedpassword456",
+            "dob": "1985-05-15",
+            "phone": "+0987654321",
+            "location": "London, UK",
+            "preferences": {
+                "notifications": false,
+                "theme": "light"
+            },
+            "profile_picture": "https://example.com/profile2.jpg",
+            "created_at": "2023-10-02T12:00:00Z",
+            "updated_at": "2023-10-02T12:00:00Z"
+        }
+    ],
+    "events": [
+        {
+            "id": "550e8400-e29b-41d4-a716-446655440002",
+            "organizer_id": "550e8400-e29b-41d4-a716-446655440000",
+            "title": "Tech Conference 2023",
+            "description": "A conference about the latest in technology.",
+            "category": "Tech",
+            "start_time": "2023-11-15T09:00:00Z",
+            "end_time": "2023-11-16T18:00:00Z",
+            "location": "San Francisco, USA",
+            "venue_details": {
+                "name": "SF Convention Center",
+                "capacity": 5000
+            },
+            "ticket_types": [
+                {
+                    "type": "General Admission",
+                    "price": 100.00
+                },
+                {
+                    "type": "VIP",
+                    "price": 250.00
+                }
+            ],
+            "media": {
+                "images": [
+                    "https://example.com/event1.jpg"
+                ],
+                "videos": [
+                    "https://example.com/event1.mp4"
+                ]
+            },
+            "is_virtual": false,
+            "blockchain_verified": true,
+            "created_at": "2023-10-01T12:00:00Z",
+            "updated_at": "2023-10-01T12:00:00Z"
+        }
+    ],
+    "bookings": [
+        {
+            "id": "550e8400-e29b-41d4-a716-446655440003",
+            "user_id": "550e8400-e29b-41d4-a716-446655440000",
+            "event_id": "550e8400-e29b-41d4-a716-446655440002",
+            "ticket_type": "General Admission",
+            "quantity": 2,
+            "total_price": 200.00,
+            "seat_numbers": [
+                "A1",
+                "A2"
+            ],
+            "additional_services": {
+                "catering": true,
+                "parking": false
+            },
+            "special_requests": "Vegetarian meals please.",
+            "payment_status": "Completed",
+            "blockchain_ticket_hash": "0x1234567890abcdef",
+            "created_at": "2023-10-05T12:00:00Z",
+            "updated_at": "2023-10-05T12:00:00Z"
+        }
+    ],
+    "payments": [
+        {
+            "id": "550e8400-e29b-41d4-a716-446655440004",
+            "booking_id": "550e8400-e29b-41d4-a716-446655440003",
+            "user_id": "550e8400-e29b-41d4-a716-446655440000",
+            "amount": 200.00,
+            "payment_gateway": "Telebirr",
+            "transaction_reference": "TX123456789",
+            "status": "Success",
+            "created_at": "2023-10-05T12:05:00Z"
+        }
+    ],
+    "reviews": [
+        {
+            "id": "550e8400-e29b-41d4-a716-446655440005",
+            "user_id": "550e8400-e29b-41d4-a716-446655440000",
+            "event_id": "550e8400-e29b-41d4-a716-446655440002",
+            "rating": 5,
+            "review_text": "Amazing event! Learned a lot.",
+            "created_at": "2023-11-17T12:00:00Z"
+        }
+    ],
+    "notifications": [
+        {
+            "id": "550e8400-e29b-41d4-a716-446655440006",
+            "user_id": "550e8400-e29b-41d4-a716-446655440000",
+            "message": "Your booking for Tech Conference 2023 is confirmed.",
+            "type": "Booking Reminder",
+            "read_status": false,
+            "created_at": "2023-10-05T12:10:00Z"
+        }
+    ],
+    "ai_security_logs": [
+        {
+            "id": "550e8400-e29b-41d4-a716-446655440007",
+            "user_id": "550e8400-e29b-41d4-a716-446655440000",
+            "event_id": "550e8400-e29b-41d4-a716-446655440002",
+            "action": "Ticket Purchase",
+            "risk_level": "Low",
+            "details": {
+                "ip_address": "192.168.1.1",
+                "device": "Desktop"
+            },
+            "logged_at": "2023-10-05T12:00:00Z"
+        }
+    ],
+    "event_chats": [
+        {
+            "id": "550e8400-e29b-41d4-a716-446655440008",
+            "event_id": "550e8400-e29b-41d4-a716-446655440002",
+            "user_id": "550e8400-e29b-41d4-a716-446655440000",
+            "message": "Can't wait for the event!",
+            "message_type": "Text",
+            "sent_at": "2023-11-14T12:00:00Z"
+        }
+    ],
+    "social_shares": [
+        {
+            "id": "550e8400-e29b-41d4-a716-446655440009",
+            "user_id": "550e8400-e29b-41d4-a716-446655440000",
+            "event_id": "550e8400-e29b-41d4-a716-446655440002",
+            "platform": "Facebook",
+            "shared_at": "2023-10-05T12:15:00Z"
+        }
+    ],
+    "venues": [
+        {
+            "id": "550e8400-e29b-41d4-a716-446655440010",
+            "name": "SF Convention Center",
+            "location": "San Francisco, USA",
+            "capacity": 5000,
+            "facilities": {
+                "parking": true,
+                "wifi": true
+            },
+            "gallery": [
+                "https://example.com/venue1.jpg"
+            ],
+            "map_link": "https://maps.example.com/venue1",
+            "created_at": "2023-10-01T12:00:00Z"
+        }
+    ],
+    "organizers": [
+        {
+            "id": "550e8400-e29b-41d4-a716-446655440011",
+            "user_id": "550e8400-e29b-41d4-a716-446655440000",
+            "organization_name": "Tech Events Inc.",
+            "website": "https://techevents.com",
+            "social_media": {
+                "twitter": "https://twitter.com/techevents",
+                "facebook": "https://facebook.com/techevents"
+            },
+            "verification_status": "Verified",
+            "created_at": "2023-10-01T12:00:00Z"
+        }
+    ]
+}
