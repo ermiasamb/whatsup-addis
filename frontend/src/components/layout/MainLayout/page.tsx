@@ -14,7 +14,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
 
       {/* Main Content (Expands when sidebar is hidden) */}
       <main
-        className={`flex-1 transition-all duration-300 ${
+        className={`flex-1 font-poppins transition-all duration-300 ${
           isOpen ? "ml-64" : "ml-0"
         }`}
       >

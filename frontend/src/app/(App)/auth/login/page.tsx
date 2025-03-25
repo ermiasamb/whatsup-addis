@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useAuth } from "@/Context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import FormInput from "@/components/common/FormInput";
@@ -10,15 +10,28 @@ import FormButton from "@/components/common/FormButton";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
-  const { login, user } = useAuth();
+  const [password, setPassword] = useState("");
+
+  const { login } = useAuth();
   const router = useRouter();
-  const handleLogin = () => {
-    login(email);
-    // Redirect user based on role
-    if (email.endsWith("@company.com")) router.push("/dashboard/admin");
-    else if (email.endsWith("@org.com")) router.push("/dashboard/organizer");
-    else router.push("/dashboard/client");
+
+  // Updated to handle form submission properly
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent default form submission
+
+    if (email && password) {
+      login(email);
+      // Redirect user based on role
+      if (email.endsWith("@admin.com")) {
+        router.push("/admin/dashboard");
+      } else if (email.endsWith("@org.com")) {
+        router.push("/organizer/dashboard");
+      } else {
+        router.push("/client/dashboard");
+      }
+    }
   };
+
   return (
     <div className="min-h-screen lg:ml-[16rem] flex items-center font-poppins justify-center bg-MainPage-primary">
       {/* Container with max-w-lg for wider layout */}
@@ -31,8 +44,8 @@ export default function LoginForm() {
           </p>
         </div>
 
-        {/* Form Section */}
-        <form className="space-y-6">
+        {/* Updated form to handle onSubmit */}
+        <form className="space-y-6" onSubmit={handleLogin}>
           {/* Email */}
           <FormInput
             id="email"
@@ -46,19 +59,19 @@ export default function LoginForm() {
             type="password"
             placeholder="••••••••"
             showPasswordToggle
+            onChange={(e) => setPassword(e.target.value)}
           />
 
-          {/* Log In Button */}
+          {/* Updated button to be type="submit" */}
           <FormButton
             type="submit"
             label="LogIn"
             className="bg-orange-500 hover:bg-orange-500/90"
-            onClick={handleLogin}
           />
         </form>
         {/* Registration Link */}
         <p className="text-center text-gray-600 text-sm">
-          Don’t have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link
             href="/auth/register"
             className="text-sky-600 hover:underline font-medium"
@@ -67,7 +80,7 @@ export default function LoginForm() {
           </Link>
         </p>
       </div>
-      {user && <p>Logged in as: {user.role}</p>}
+      {/* User redirection logic removed as it is already handled in handleLogin */}
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 type Props = {
   title: string;
   key: string;
-  value: number;
+  value: number | string;
   icon: React.ReactNode;
 };
 

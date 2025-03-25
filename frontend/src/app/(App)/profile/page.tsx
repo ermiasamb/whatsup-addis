@@ -28,10 +28,9 @@ export default function UserProfilePage() {
     website: "https://eventmasters.com",
   });
 
-  const [dateOfBirth, setDateOfBirth] = useState<Date | undefined>(user.dob);
+  const [dateOfBirth] = useState<Date | undefined>(user.dob);
   const [isEditing, setIsEditing] = useState(false); // State to manage edit mode
 
-  // Fetch user data from the database (example)
   useEffect(() => {
     // Simulate fetching user data
     const fetchUserData = async () => {

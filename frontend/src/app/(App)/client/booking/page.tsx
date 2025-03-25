@@ -42,7 +42,7 @@ export default function BookingPage() {
     date: "2025-03-20",
     time: "19:00",
     location: "Grand Arena, City Center",
-    image: "/seatmap.jpg", // High-quality event image
+    image: "/seatmap.jpg",
   };
 
   const handleSeatClick = (seat: string, sectionName: string) => {
@@ -104,9 +104,9 @@ export default function BookingPage() {
   };
 
   return (
-    <div className="min-h-screen max-w-[100vw] lg:ml-[16rem] flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-6 overflow-hidden">
+    <div className="min-h-screen max-w-[100vw] lg:ml-[16rem] flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-6 overflow-hidden ">
       {/* Main Container */}
-      <div className="w-full max-w-6xl flex flex-col gap-6">
+      <div className="w-full max-w-6xl flex flex-col gap-6  ">
         {/* Seat Map and Seat Selection (Side by Side on Desktop) */}
         <div className="w-full flex flex-col lg:flex-row ">
           {/* Seat Map */}

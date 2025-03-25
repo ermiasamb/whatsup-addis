@@ -13,7 +13,7 @@ import {
 
 export default function Footer() {
   return (
-    <section className="text-white bg-slate-100  py-10 mt-10">
+    <section className="text-white bg-MainPage-primary/95 py-10 mt-10">
       <div className="container mx-auto px-6 lg:px-16">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mx-auto ">
           {/* Branding & Description */}

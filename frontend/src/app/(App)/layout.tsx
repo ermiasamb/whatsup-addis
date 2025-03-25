@@ -5,7 +5,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import Navbar from "@/components/layout/NavBar/navPage";
 import MainLayout from "@/components/layout/MainLayout/page";
 import Footer from "@/components/layout/Footer/footer";
-import { AuthProvider } from "../../Context/AuthContext";
+import { AuthProvider } from "../../context/AuthContext";
 export default function RootLayout({
   children,
 }: {

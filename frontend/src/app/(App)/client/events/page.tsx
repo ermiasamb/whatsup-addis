@@ -15,7 +15,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-// import { Checkbox } from "@/components/ui/checkbox";
 import Image from "next/image";
 import { Calendar, MapPin } from "lucide-react";
 

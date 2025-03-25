@@ -1,4 +1,3 @@
-// app/(organizer)/events/[eventId]/page.tsx
 import {
   Card,
   CardHeader,

@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useState, useContext, ReactNode } from "react";
+import {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useEffect,
+} from "react";
 
 // Define user type
 interface User {
@@ -21,16 +27,33 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
+  // Load user from localStorage on initial render
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
   // Fake role assignment based on email
   const login = (email: string) => {
     let role: User["role"] = "client";
-    if (email.endsWith("@company.com")) role = "admin";
-    if (email.endsWith("@org.com")) role = "organizer";
+    if (email.includes("@admin.com")) role = "admin";
+    if (email.includes("@org.com")) role = "organizer";
 
-    setUser({ email, role });
+    const userData = { email, role };
+
+    // Save to localStorage
+    localStorage.setItem("user", JSON.stringify(userData));
+
+    setUser(userData);
   };
 
-  const logout = () => setUser(null);
+  const logout = () => {
+    // Remove from localStorage
+    localStorage.removeItem("user");
+    setUser(null);
+  };
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
