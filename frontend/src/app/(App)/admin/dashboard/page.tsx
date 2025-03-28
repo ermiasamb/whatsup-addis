@@ -15,7 +15,7 @@ const adminCards = [
     title: "Upcoming Events",
     description: "12 events in the next 7 days",
     icon: <Calendar className="h-6 w-6" />,
-    link: "/admin/events",
+    link: "/events",
     color: "bg-purple-50 text-purple-600",
   },
   {

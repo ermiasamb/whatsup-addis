@@ -10,7 +10,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <head>
           <meta charSet="UTF-8" />
         </head>
-        <body>
+        <body className="bg-gradient-to-b from-slate-900  to-lime-500">
           <main>
             <Navbar />
             {children}

@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+
 import {
   Popover,
   PopoverContent,
@@ -24,8 +25,8 @@ export default function RegistrationForm() {
   const [selectedRole, setSelectedRole] = useState<string>("user");
 
   return (
-    <div className="min-h-screen lg:ml-[16rem] mx-auto flex items-center justify-center font-poppins bg-MainPage-primary">
-      <div className="bg-white rounded-xl shadow-lg p-8 space-y-8 max-w-xl w-full">
+    <div className="min-h-screen lg:ml-[16rem] mx-auto flex items-center justify-center font-poppins bg-MainPage-primary ">
+      <div className="bg-white rounded-xl shadow-lg p-8 space-y-8 max-w-xl w-full my-8">
         {/* Header Section */}
         <div className="text-center space-y-3">
           <h1 className="text-3xl font-bold text-gray-900">

@@ -15,7 +15,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased flex flex-col">
         {/* Fixed Navbar */}
-        <div className="fixed z-50 top-0 left-0 w-full shadow-sm">
+        <div className="fixed z-50 top-0 left-0 w-full ">
           <Navbar />
         </div>
 

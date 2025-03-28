@@ -11,6 +11,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Ticket, Search, Bell } from "lucide-react";
 import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
 
 // Mock data aligned with the database schema
 const userData = {
@@ -62,9 +63,38 @@ const userData = {
   ],
 };
 
+// Client navigation cards matching organizer style
+const clientCards = [
+  {
+    title: "My Bookings",
+    description: "View all your bookings",
+    icon: <Ticket className="h-6 w-6" />,
+    link: "/client/bookings",
+    color: "bg-blue-50 text-blue-600",
+  },
+  {
+    title: "Explore Events",
+    description: "Discover upcoming events",
+    icon: <Calendar className="h-6 w-6" />,
+    link: "/events",
+    color: "bg-green-50 text-green-600",
+  },
+];
+
 export default function ClientDashboard() {
+  const { user } = useAuth();
+  if (user?.role !== "client") {
+    return (
+      <div className="min-h-screen lg:ml-[16rem] flex items-center justify-center bg-MainPage-primary">
+        <h1 className="text-2xl font-semibold text-muted-foreground">
+          You are not authorized to view this page.
+        </h1>
+      </div>
+    );
+  }
+
   return (
-    <div className="p-6 lg:ml-[16rem] min-h-screen bg-MainPage-primary ">
+    <div className="p-6 lg:ml-[16rem] min-h-screen bg-MainPage-primary">
       {/* Header Section */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-semibold">
@@ -82,49 +112,29 @@ export default function ClientDashboard() {
       <div className="flex flex-col md:flex-row gap-6">
         {/* Main Content Section */}
         <div className="flex-1 space-y-6">
-          {/* Quick Actions */}
-          <div className="flex gap-4 mb-6 w-full">
-            <Card className="w-[200px]">
-              <CardHeader className="flex flex-col items-center p-4">
-                <div className="flex justify-center">
-                  <Ticket className="h-6 w-6 text-amber-800" />
-                </div>
-                <h1 className="text-sm">My Booking</h1>
-              </CardHeader>
-              <CardContent className="p-4 pt-0">
-                <Link href="/client/bookings">
-                  <Button
-                    variant="default"
-                    className="flex w-full h-8 items-center gap-2"
-                  >
-                    open
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-
-            <Card className="w-[200px]">
-              <CardHeader className="flex flex-col items-center p-4">
-                <div className="flex justify-center">
-                  <Calendar className="h-6 w-6 text-amber-800" />
-                </div>
-                <h1 className="text-sm">Explore Events</h1>
-              </CardHeader>
-              <CardContent className="p-4 pt-0">
-                <Link href="/client/events">
-                  <Button
-                    variant="default"
-                    className="flex w-full h-8 items-center gap-2"
-                  >
-                    open
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
+          {/* Quick Actions - Updated to match organizer style */}
+          <div className="container grid grid-cols-1 sm:grid-cols-2 gap-6 sm:h-40 mx-auto">
+            {clientCards.map((card) => (
+              <Link href={card.link} key={card.title}>
+                <Card className="border-none shadow-sm hover:shadow-md transition-all cursor-pointer h-full">
+                  <CardContent className="p-5">
+                    <div
+                      className={`rounded-full w-10 h-10 flex items-center justify-center mb-3 ${card.color}`}
+                    >
+                      {card.icon}
+                    </div>
+                    <h3 className="text-base font-medium mb-1">{card.title}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {card.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
           </div>
 
           {/* Upcoming Events Section */}
-          <Card>
+          <Card className="border-none shadow-sm">
             <CardHeader>
               <CardTitle>My Upcoming Events</CardTitle>
               <CardDescription>Events you&apos;ve booked</CardDescription>
@@ -165,7 +175,7 @@ export default function ClientDashboard() {
         {/* Sidebar Section */}
         <div className="w-full md:w-80">
           {/* Notifications Section */}
-          <Card>
+          <Card className="border-none shadow-sm">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Notifications</CardTitle>
@@ -178,9 +188,9 @@ export default function ClientDashboard() {
                 {userData.notifications.map((notification) => (
                   <div
                     key={notification.id}
-                    className="p-3 rounded-lg border bg-card"
+                    className="space-y-1 flex flex-col p-2 ring-1 ring-inset ring-stone-200/60 shadow-sm"
                   >
-                    <div className="flex items-center gap-2 mb-1">
+                    <div className="flex items-center gap-1 xl:gap-4 flex-wrap lg:flex-nowrap">
                       <Badge
                         variant={
                           notification.read_status ? "secondary" : "default"
@@ -188,11 +198,14 @@ export default function ClientDashboard() {
                       >
                         {notification.type}
                       </Badge>
-                      <span className="text-xs text-muted-foreground ml-auto">
+                      <p className="hidden 3xl:flex text-balance">
+                        {notification.message}
+                      </p>
+                      <p className="text-sm text-muted-foreground ml-auto">
                         {new Date(notification.created_at).toLocaleDateString()}
-                      </span>
+                      </p>
                     </div>
-                    <p className="text-sm">{notification.message}</p>
+                    <p className="flex 3xl:hidden">{notification.message}</p>
                   </div>
                 ))}
                 {userData.notifications.length === 0 && (

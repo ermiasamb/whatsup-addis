@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { AuthProvider } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import FormInput from "@/components/common/FormInput";
@@ -8,7 +9,7 @@ import FormButton from "@/components/common/FormButton";
 
 // Redirect user to dashboard if already logged in
 
-export default function LoginForm() {
+export function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -33,7 +34,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen lg:ml-[16rem] flex items-center font-poppins justify-center bg-MainPage-primary">
+    <div className="min-h-screen lg:ml-[16rem] flex items-center font-poppins justify-center ">
       {/* Container with max-w-lg for wider layout */}
       <div className="w-full max-w-xl bg-white rounded-xl shadow-lg p-8 space-y-8">
         {/* Header Section */}
@@ -82,5 +83,12 @@ export default function LoginForm() {
       </div>
       {/* User redirection logic removed as it is already handled in handleLogin */}
     </div>
+  );
+}
+export default function LoginPage() {
+  return (
+    <AuthProvider>
+      <LoginForm />
+    </AuthProvider>
   );
 }

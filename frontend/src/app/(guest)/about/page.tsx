@@ -16,8 +16,8 @@ export default function AboutSection() {
             Empowering Global Event Experiences
           </h1>
           <p className="text-2xl text-gray-600 max-w-3xl mx-auto">
-            Eventify transforms how People discover, manage, and optimize
-            corporate events through smart solutions.
+            Eventify transforms how People discover, manage, and optimize events
+            through smart solutions.
           </p>
         </div>
 

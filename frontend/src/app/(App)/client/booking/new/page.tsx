@@ -17,6 +17,7 @@ import Image from "next/image";
 import FormInput from "@/components/common/FormInput";
 import FormTextarea from "@/components/common/FormTextarea";
 import FormButton from "@/components/common/FormButton";
+import { useAuth } from "@/context/AuthContext";
 
 export default function BookingPage() {
   const { toast } = useToast();
@@ -102,7 +103,16 @@ export default function BookingPage() {
       description: "Your seats have been reserved!",
     });
   };
-
+  const { user } = useAuth();
+  if (user?.role !== "client") {
+    return (
+      <div className="min-h-screen lg:ml-[16rem] flex items-center justify-center bg-MainPage-primary">
+        <h1 className="text-2xl font-semibold text-muted-foreground">
+          You are not authorized to view this page.
+        </h1>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen max-w-[100vw] lg:ml-[16rem] flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-6 overflow-hidden ">
       {/* Main Container */}
@@ -226,7 +236,7 @@ export default function BookingPage() {
           />
 
           {/* Total Price */}
-          <div className="text-2xl font-bold text-gray-900 mb-6">
+          <div className="text-2xl font-bold text-gray-900 my-6">
             Total: ${totalPrice.toFixed(2)}
           </div>
 

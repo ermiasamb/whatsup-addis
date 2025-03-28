@@ -55,8 +55,15 @@ const adminItems = [
   { title: "Transactions & Payments", url: "#", icon: DollarSign, link: "/" },
   { title: "Settings", url: "#", icon: Settings, link: "/" },
 ];
+type User = {
+  email: string;
+  role: "admin" | "organizer" | "client" | null;
+};
+type SidebarProps = {
+  currentUser: User;
+};
 
-export function AppSidebar() {
+export function AppSidebar({ currentUser }: SidebarProps) {
   const { isOpen } = useSidebar();
   const router = useRouter();
 
@@ -105,26 +112,28 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarGroupLabel className="text-xl font-bold font-inter">
-              Admin
-            </SidebarGroupLabel>
-            <SidebarMenu className="space-y-1">
-              {adminItems.map((item, index) => (
-                <SidebarMenuItem
-                  key={index}
-                  onClick={() => router.push(item.link)}
-                >
-                  <SidebarMenuButton>
-                    <item.icon size={24} />
-                    <span className="font-inter text-lg">{item.title}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        {currentUser?.role === "admin" && (
+          <SidebarGroup>
+            <SidebarGroupContent>
+              <SidebarGroupLabel className="text-xl font-bold font-inter">
+                Admin
+              </SidebarGroupLabel>
+              <SidebarMenu className="space-y-1">
+                {adminItems.map((item, index) => (
+                  <SidebarMenuItem
+                    key={index}
+                    onClick={() => router.push(item.link)}
+                  >
+                    <SidebarMenuButton>
+                      <item.icon size={24} />
+                      <span className="font-inter text-lg">{item.title}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
       </SidebarContent>
 
       <SidebarFooter />

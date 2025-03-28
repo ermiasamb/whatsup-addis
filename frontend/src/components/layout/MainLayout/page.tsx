@@ -1,16 +1,17 @@
 import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { AppSidebar } from "../AppSidebar/page";
+import { useAuth } from "@/context/AuthContext";
 
 function MainLayout({ children }: { children: React.ReactNode }) {
   const { isOpen } = useSidebar();
-
-  return (
+  const { user } = useAuth(); // Assuming you have a useAuth hook to get the user
+  return user ? (
     <div className="flex flex-1 mt-[4rem]">
       {/* Mobile Sidebar Trigger */}
       <SidebarTrigger className="lg:hidden fixed top-4 left-4 z-50 scale-150" />
 
       {/* Sidebar Component */}
-      <AppSidebar />
+      <AppSidebar currentUser={user} />
 
       {/* Main Content (Expands when sidebar is hidden) */}
       <main
@@ -21,6 +22,6 @@ function MainLayout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
     </div>
-  );
+  ) : null;
 }
 export default MainLayout;
