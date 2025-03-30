@@ -73,29 +73,29 @@ export default function page() {
     <div>
       {/* Hero Section */}
       <section id="hero">
-        <div className="container flex flex-col-reverse mt-10 p-12 mx-auto items-center md:space-y-0 md:flex-row text-white">
+        <div className="container md:w-5/6  flex flex-col-reverse mt-10 p-12 mx-auto items-center md:space-y-0 md:flex-row text-white ">
           {/* Left Item */}
-          <div className="flex flex-col mb-32 space-y-12 md:w-1/2">
+          <div className="flex flex-col mb-32 space-y-8 mt-8 md:mt-0 md:w-1/2 mx-auto">
             <h1 className="max-w-md text-4xl font-bold text-center bg-gradient-to-r from-gray-200 via-gray-300 to-gray-400  bg-clip-text text-transparent md:text-5xl md:text-left">
-              Bringing your passions to life through events.
+              Your Gateway To Awesome Events!
             </h1>
-            <p className="max-w-sm text-left text-lg text-gray-200">
+            <p className="max-w-lg md:max-w-sm text-left text-lg text-gray-200">
               What&apos;sup Addis transforms how people discover, manage, and
-              optimize corporate events through smart solutions.
+              optimize events through smart solutions.
             </p>
             <Link
-              href="#"
-              className="hidden self-baseline p-3 px-6 cursor-pointer bg-lime-500 rounded-full text-white border border-brightRed hover:bg-white hover:text-brightRed duration-1000 md:inline-block"
+              href="/auth/register"
+              className="self-baseline p-3 px-6 cursor-pointer bg-lime-500 rounded-full text-white border border-brightRed hover:bg-lime-500/90"
             >
               <p className="w-full text-white">Get Started</p>
             </Link>
           </div>
           {/* Right Item */}
-          <div className="flex flex-col">
+          <div className="flex flex-col ">
             <Image
               width={500}
               height={500}
-              className="object-cover"
+              className="object-cover rounded-sm"
               src="/profile1.jpg"
               alt="hero image"
             />
@@ -162,7 +162,7 @@ export default function page() {
 
       {/* Upcoming Events Section */}
       <section id="events" className="py-16 text-white">
-        <div className="container mx-auto px-6 text-center">
+        <div className="container md:w-5/6 mx-auto px-6 text-center">
           <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-400 bg-clip-text text-transparent">
             Upcoming Events
           </h2>
@@ -170,7 +170,7 @@ export default function page() {
             {upcomingEvents.map((event) => (
               <Card
                 key={event.id}
-                className="p-6 bg-gray-100 rounded-lg shadow-md flex flex-col justify-between"
+                className="p-2 bg-gray-100 rounded-lg shadow-md flex flex-col justify-between"
               >
                 <Image
                   src={event.image}
@@ -199,10 +199,10 @@ export default function page() {
                   </CardDescription>
                   <div className="mt-auto">
                     <Link
-                      href="#"
+                      href="/client/events/1"
                       className="inline-block bg-lime-500 text-white px-4 py-2 rounded-full hover:bg-lime-600 transition duration-300"
                     >
-                      Learn More
+                      Learn more
                     </Link>
                   </div>
                 </CardContent>

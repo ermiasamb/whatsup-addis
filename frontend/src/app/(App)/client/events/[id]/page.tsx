@@ -47,11 +47,11 @@ export default function EventDetail() {
   const getTicketIcon = (type: string) => {
     switch (type.toLowerCase()) {
       case "premium":
-        return <Crown className="w-10 h-10 text-yellow-500" />;
+        return <Crown className="w-10 h-10 text-[#FFD700]" />;
       case "vip":
-        return <Star className="w-10 h-10 text-yellow-600" />;
+        return <Star className="w-10 h-10 text-purple-900" />;
       default:
-        return <Ticket className="w-10 h-10 text-gray-600" />;
+        return <Ticket className="w-10 h-10 text-blue-800" />;
     }
   };
 
@@ -109,9 +109,9 @@ export default function EventDetail() {
         </Card>
 
         {/* Ticket Types */}
-        <Card className="mt-6 xl:w-[60%] mx-auto border border-red-600">
+        <Card className="mt-6 xl:w-[60%] mx-auto ">
           <CardHeader>
-            <CardTitle className="text-center text-xl text-stone-700">
+            <CardTitle className="text-center text-xl text-white">
               Ticket Types
             </CardTitle>
           </CardHeader>
@@ -121,23 +121,23 @@ export default function EventDetail() {
                 key={index}
                 className={`flex flex-col items-center justify-center p-4 rounded-lg shadow-md ${
                   ticket.type.toLowerCase() === "vip"
-                    ? "bg-amber-700"
+                    ? "bg-gradient-to-r from-purple-400 to-purple-600"
                     : ticket.type.toLowerCase() === "premium"
-                    ? "bg-amber-400"
-                    : "bg-gray-200"
+                    ? "bg-gradient-to-r from-yellow-400 to-yellow-600"
+                    : "bg-gradient-to-r from-blue-400 to-blue-600"
                 }`}
               >
                 {getTicketIcon(ticket.type)}
-                <CardTitle className="text-lg font-semibold mt-2">
+                <CardTitle className="text-lg text-white font-semibold mt-2">
                   {ticket.type}
                 </CardTitle>
                 <CardContent>
-                  <p className="text-sm text-gray-700 text-center">
+                  <p className="text-sm text-white text-center">
                     ${ticket.price}
                   </p>
                 </CardContent>
                 <CardFooter>
-                  <Button>
+                  <Button className="bg-transparent shadow-none">
                     <Link href="/booking" className="flex items-center">
                       Book Now
                       <ChevronRight className="w-4 h-4 ml-2" />

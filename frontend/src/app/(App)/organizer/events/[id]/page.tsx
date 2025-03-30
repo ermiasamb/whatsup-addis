@@ -17,7 +17,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import Image from "next/image";
-import { useAuth } from "@/context/AuthContext";
+// import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import SummaryCard from "@/components/common/SummaryCard";
 
@@ -77,7 +77,7 @@ const eventData = {
 export default function EventDetail() {
   const { id } = useParams();
   const router = useRouter();
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const [event] = useState(eventData);
   const [loading, setLoading] = useState(true);
 
@@ -94,23 +94,8 @@ export default function EventDetail() {
     );
   }
 
-  // Check if user is authorized to view this page
-  if (!user || user.role !== "organizer") {
-    return (
-      <div className="p-6 lg:ml-[16rem] text-center">
-        <User className="h-12 w-12 text-red-500 mx-auto mb-4" />
-        <h2 className="text-2xl font-bold mb-2">Unauthorized Access</h2>
-        <p className="mb-4">
-          You don&apos;t have permission to view this page.
-        </p>
-        <Link href="/login">
-          <Button>Log In</Button>
-        </Link>
-      </div>
-    );
-  }
-
   return (
+    
     <div className="grid grid-cols-1 md:grid-cols-4 lg:ml-[16rem] gap-6 p-6 min-h-screen bg-MainPage-primary">
       {/* Back button and Edit button */}
       <div className="md:col-span-4 flex justify-between items-center">

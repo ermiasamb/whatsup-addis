@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -17,7 +18,7 @@ import Image from "next/image";
 import FormInput from "@/components/common/FormInput";
 import FormTextarea from "@/components/common/FormTextarea";
 import FormButton from "@/components/common/FormButton";
-import { useAuth } from "@/context/AuthContext";
+// import { useAuth } from "@/context/AuthContext";
 
 export default function BookingPage() {
   const { toast } = useToast();
@@ -78,6 +79,7 @@ export default function BookingPage() {
 
   const selectedTicket = ticketTypes.find((t) => t.type === ticketType);
   const totalPrice = selectedTicket ? selectedTicket.price * quantity : 0;
+  const router = useRouter();
 
   const handleSubmit = () => {
     if (!ticketType || selectedSeats.length === 0) {
@@ -86,6 +88,8 @@ export default function BookingPage() {
         description: "Please select a ticket type and at least one seat.",
         variant: "destructive",
       });
+      // route to booking page
+      router.push("/client/bookings/list");
       return;
     }
 
@@ -103,16 +107,16 @@ export default function BookingPage() {
       description: "Your seats have been reserved!",
     });
   };
-  const { user } = useAuth();
-  if (user?.role !== "client") {
-    return (
-      <div className="min-h-screen lg:ml-[16rem] flex items-center justify-center bg-MainPage-primary">
-        <h1 className="text-2xl font-semibold text-muted-foreground">
-          You are not authorized to view this page.
-        </h1>
-      </div>
-    );
-  }
+  // const { user } = useAuth();
+  // if (user?.role !== "client") {
+  //   return (
+  //     <div className="min-h-screen lg:ml-[16rem] flex items-center justify-center bg-MainPage-primary">
+  //       <h1 className="text-2xl font-semibold text-muted-foreground">
+  //         You are not authorized to view this page.
+  //       </h1>
+  //     </div>
+  //   );
+  // }
   return (
     <div className="min-h-screen max-w-[100vw] lg:ml-[16rem] flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-6 overflow-hidden ">
       {/* Main Container */}
@@ -165,7 +169,7 @@ export default function BookingPage() {
                           key={seat}
                           onClick={() => handleSeatClick(seat, section.name)}
                           className={cn(
-                            "p-2 border rounded-md text-sm flex items-center justify-center transition-all duration-200",
+                            "p-2 border rounded-md text-xs flex items-center justify-center transition-all duration-200",
                             selectedSeats.includes(seat)
                               ? "bg-blue-600 text-white border-blue-600"
                               : "bg-white hover:bg-blue-50 border-gray-200",

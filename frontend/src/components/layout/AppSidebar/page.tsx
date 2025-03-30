@@ -3,7 +3,6 @@
 import {
   Home,
   Inbox,
-  Search,
   Settings,
   Star,
   Settings2Icon,
@@ -30,12 +29,10 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 const items = [
-  { title: "Dashboard", url: "#", icon: Home, link: "/dashboard/user" },
+  { title: "Dashboard", url: "#", icon: Home, link: "/dashboard" },
   { title: "Events", url: "#", icon: Inbox, link: "/events" },
-  { title: "Categories", url: "#", icon: Boxes, link: "/" },
-  { title: "Favorites", url: "#", icon: Star, link: "/" },
-  { title: "Search", url: "#", icon: Search, link: "/" },
-  { title: "Settings", url: "#", icon: Settings, link: "/" },
+  { title: "Bookings", url: "#", icon: Boxes, link: "/bookings" },
+  { title: "Profile", url: "#", icon: Star, link: "/Profile" },
 ];
 
 const adminItems = [
@@ -122,7 +119,11 @@ export function AppSidebar({ currentUser }: SidebarProps) {
                 {adminItems.map((item, index) => (
                   <SidebarMenuItem
                     key={index}
-                    onClick={() => router.push(item.link)}
+                    onClick={() =>
+                      router.push(
+                        currentUser ? currentUser.role + item.link : item.link
+                      )
+                    }
                   >
                     <SidebarMenuButton>
                       <item.icon size={24} />

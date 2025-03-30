@@ -28,7 +28,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { Search, Filter, Download, Eye, MoreHorizontal } from "lucide-react";
+import { Search, Filter, Download } from "lucide-react";
 import Link from "next/link";
 // import { useRouter } from "next/navigation";
 import { useAuth } from "../../../../context/AuthContext";
@@ -157,213 +157,176 @@ export default function BookingsPage() {
     console.log(user?.role);
     return null;
   }
-  return;
-  <div className="p-6 lg:ml-[16rem] min-h-screen bg-background">
-    {/* Header with breadcrumb */}
-    <div className="mb-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold">Booking Management</h1>
-        <Button variant="outline" size="sm">
-          <Download className="mr-2 h-4 w-4" />
-          Export
-        </Button>
+  return (
+    <div className="p-6 lg:ml-[16rem] min-h-screen bg-background">
+      {/* Header with breadcrumb */}
+      <div className="mb-6">
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl font-semibold">Bookings</h1>
+          <Button variant="outline" size="sm">
+            <Download className="mr-2 h-4 w-4" />
+            Export
+          </Button>
+        </div>
       </div>
-    </div>
 
-    {/* Filters - Improved layout and responsiveness */}
-    <Card className="mb-6 border-none shadow-sm">
-      <CardContent className="p-4">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search by name, event, or booking ID..."
-              className="pl-8"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <div className="flex gap-2">
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Filter by status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="All">All Statuses</SelectItem>
-                <SelectItem value="Completed">Completed</SelectItem>
-                <SelectItem value="Pending">Pending</SelectItem>
-                <SelectItem value="Failed">Failed</SelectItem>
-                <SelectItem value="Refunded">Refunded</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button variant="outline" size="icon">
-              <Filter className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-
-    {/* Bookings Table - Improved spacing and readability */}
-    <Card className="border-none shadow-sm overflow-hidden">
-      <CardContent className="p-0">
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-muted/50">
-                <TableHead className="font-medium">Booking ID</TableHead>
-                <TableHead className="font-medium">Customer</TableHead>
-                <TableHead className="font-medium">Event</TableHead>
-                <TableHead className="font-medium">Tickets</TableHead>
-                <TableHead className="font-medium">Amount</TableHead>
-                <TableHead className="font-medium">Status</TableHead>
-                <TableHead className="font-medium">Date</TableHead>
-                <TableHead className="text-right font-medium">
-                  Actions
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredBookings.map((booking) => (
-                <TableRow
-                  key={booking.id}
-                  className="hover:bg-muted/30 transition-colors"
-                >
-                  <TableCell className="font-medium">{booking.id}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <Avatar className="h-8 w-8">
-                        <AvatarFallback className="text-xs">
-                          {booking.user_name
-                            .split(" ")
-                            .map((n) => n[0])
-                            .join("")}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <p className="text-sm font-medium">
-                          {booking.user_name}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {booking.user_email}
-                        </p>
-                      </div>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Link
-                      href={`/admin/events/${booking.event_id}`}
-                      className="text-sm font-medium hover:underline"
-                    >
-                      {booking.event}
-                    </Link>
-                  </TableCell>
-                  <TableCell>
-                    <div className="text-sm">
-                      <span className="font-medium">{booking.quantity}</span> ×{" "}
-                      {booking.ticket_type}
-                    </div>
-                  </TableCell>
-                  <TableCell className="font-medium">
-                    ETB {booking.total_price.toLocaleString()}
-                  </TableCell>
-                  <TableCell>
-                    <Badge
-                      variant={
-                        booking.payment_status === "Completed"
-                          ? "default"
-                          : booking.payment_status === "Pending"
-                          ? "secondary"
-                          : booking.payment_status === "Refunded"
-                          ? "outline"
-                          : "destructive"
-                      }
-                      className="text-xs font-medium"
-                    >
-                      {booking.payment_status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-sm text-muted-foreground">
-                    {new Date(booking.created_at).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-1">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        asChild
-                        className="h-8 w-8"
-                      >
-                        <Link href={`/admin/bookings/${booking.id}`}>
-                          <Eye className="h-4 w-4" />
-                        </Link>
-                      </Button>
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-
-        {filteredBookings.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
-            <div className="rounded-full bg-muted w-12 h-12 flex items-center justify-center mb-3">
-              <Search className="h-6 w-6 text-muted-foreground" />
+      {/* Filters - Improved layout and responsiveness */}
+      <Card className="mb-6 border-none shadow-sm">
+        <CardContent className="p-4">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search by name, event, or booking ID..."
+                className="pl-8"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
             </div>
-            <p className="font-medium mb-1">No bookings found</p>
-            <p className="text-sm text-muted-foreground max-w-sm">
-              Try adjusting your search or filter to find what you&apos;re
-              looking for.
-            </p>
-          </div>
-        )}
-
-        <div className="p-4 border-t">
-          <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
-            <div>Showing 1-8 of 3,842 bookings</div>
-            <div className="flex items-center gap-2">
-              <span>Rows per page:</span>
-              <Select defaultValue="8">
-                <SelectTrigger className="h-8 w-[70px]">
-                  <SelectValue placeholder="8" />
+            <div className="flex gap-2">
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Filter by status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="8">8</SelectItem>
-                  <SelectItem value="16">16</SelectItem>
-                  <SelectItem value="24">24</SelectItem>
-                  <SelectItem value="32">32</SelectItem>
+                  <SelectItem value="All">All Statuses</SelectItem>
+                  <SelectItem value="Completed">Completed</SelectItem>
+                  <SelectItem value="Pending">Pending</SelectItem>
+                  <SelectItem value="Failed">Failed</SelectItem>
+                  <SelectItem value="Refunded">Refunded</SelectItem>
                 </SelectContent>
               </Select>
+              <Button variant="outline" size="icon" className="p-2 w-fit">
+                <Filter className="h-4 w-4" /> <span>Filter</span>
+              </Button>
             </div>
           </div>
+        </CardContent>
+      </Card>
 
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" isActive>
-                  1
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">2</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">3</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext href="#" />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </div>
-      </CardContent>
-    </Card>
-  </div>;
+      {/* Bookings Table - Improved spacing and readability */}
+      <Card className="border-none shadow-sm overflow-hidden">
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-muted/50">
+                  <TableHead className="font-medium">Booking ID</TableHead>
+                  <TableHead className="font-medium">Customer</TableHead>
+                  <TableHead className="font-medium">Event</TableHead>
+                  <TableHead className="font-medium">Tickets</TableHead>
+                  <TableHead className="font-medium">Amount</TableHead>
+                  <TableHead className="font-medium">Status</TableHead>
+                  <TableHead className="font-medium">Date</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredBookings.map((booking) => (
+                  <TableRow
+                    key={booking.id}
+                    className="hover:bg-muted/30 transition-colors"
+                  >
+                    <TableCell className="font-medium">{booking.id}</TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <Avatar className="h-8 w-8">
+                          <AvatarFallback className="text-xs">
+                            {booking.user_name
+                              .split(" ")
+                              .map((n) => n[0])
+                              .join("")}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="text-sm font-medium">
+                            {booking.user_name}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {booking.user_email}
+                          </p>
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Link
+                        href={`/admin/events/${booking.event_id}`}
+                        className="text-sm font-medium hover:underline"
+                      >
+                        {booking.event}
+                      </Link>
+                    </TableCell>
+                    <TableCell>
+                      <div className="text-sm">
+                        <span className="font-medium">{booking.quantity}</span>{" "}
+                        × {booking.ticket_type}
+                      </div>
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      ETB {booking.total_price.toLocaleString()}
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant={
+                          booking.payment_status === "Completed"
+                            ? "default"
+                            : booking.payment_status === "Pending"
+                            ? "secondary"
+                            : booking.payment_status === "Refunded"
+                            ? "outline"
+                            : "destructive"
+                        }
+                        className="text-xs font-medium"
+                      >
+                        {booking.payment_status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-sm text-muted-foreground">
+                      {new Date(booking.created_at).toLocaleDateString()}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+
+          {filteredBookings.length === 0 && (
+            <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
+              <div className="rounded-full bg-muted w-12 h-12 flex items-center justify-center mb-3">
+                <Search className="h-6 w-6 text-muted-foreground" />
+              </div>
+              <p className="font-medium mb-1">No bookings found</p>
+              <p className="text-sm text-muted-foreground max-w-sm">
+                Try adjusting your search or filter to find what you&apos;re
+                looking for.
+              </p>
+            </div>
+          )}
+
+          <div className="p-4 border-t">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious href="#" />
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationLink href="#" isActive>
+                    1
+                  </PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationLink href="#">2</PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationLink href="#">3</PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationNext href="#" />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
 }

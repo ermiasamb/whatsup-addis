@@ -75,6 +75,14 @@ export default function MyEvents() {
       router.push("/auth/login");
     }
   };
+  if (user === null) {
+    <div className="text-xl bg-yellow-500 text-black">
+      Authenticate yourself {}
+    </div>;
+  }
+  if (user === undefined) {
+    return <div className="text-lg text-center text-stone-800">Loading</div>;
+  }
   return (
     <div className="flex flex-col lg:ml-[16rem] md:flex-row p-8 h-full bg-MainPage-primary mx-auto">
       {/* Left Sidebar - Filters and Search */}

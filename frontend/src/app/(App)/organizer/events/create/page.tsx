@@ -10,7 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CalendarIcon, Upload } from "lucide-react";
+import { CalendarIcon, Upload, UploadIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import Image from "next/image";
@@ -24,10 +24,13 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useRouter } from "next/navigation";
 
 export default function EventRegistrationForm() {
   const [startTime, setStartTime] = useState<Date | undefined>(undefined);
   const [endTime, setEndTime] = useState<Date | undefined>(undefined);
+  const [eventImage, setEventImage] = useState<File | null>(null);
+
   const [selectedVenue, setSelectedVenue] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [ticketTypes, setTicketTypes] = useState<
@@ -36,7 +39,7 @@ export default function EventRegistrationForm() {
   const [seatRows, setSeatRows] = useState<number>(0);
   const [seatColumns, setSeatColumns] = useState<number>(0);
   const [seatImage, setSeatImage] = useState<File | null>(null);
-
+  const router = useRouter();
   // Mock venue data
   const venues = [
     { id: "1", name: "Grand Ballroom", location: "Downtown", capacity: 500 },
@@ -54,8 +57,12 @@ export default function EventRegistrationForm() {
     "Art",
     "Other",
   ];
-
-  const handleMediaUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEventImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setEventImage(e.target.files[0]);
+    }
+  };
+  const handleSeatmapImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setSeatImage(e.target.files[0]);
     }
@@ -66,6 +73,10 @@ export default function EventRegistrationForm() {
       ...ticketTypes,
       { type: "", price: 0, quantity: 0, description: "" },
     ]);
+  };
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    router.push("/organizer/dashboard");
   };
 
   return (
@@ -82,7 +93,7 @@ export default function EventRegistrationForm() {
         </div>
 
         {/* Form Section */}
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleFormSubmit}>
           {/* Event Title */}
           <div className="space-y-1.5">
             <Label
@@ -213,7 +224,33 @@ export default function EventRegistrationForm() {
               </Popover>
             </div>
           </div>
-
+          {/** Event Image */}
+          <div className="mb-4 flex items-center gap-4">
+            <label className="cursor-pointer bg-gray-100 hover:bg-gray-200 p-2 rounded-md">
+              <div className="flex gap-4">
+                <UploadIcon className="h-5 w-5 text-gray-700" />
+                <p>Event Image</p>
+              </div>
+              <input
+                id="event-image-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleEventImageChange}
+                className="hidden mt-1"
+              />
+            </label>
+            {eventImage && (
+              <p className="text-sm existing-helper-text-class">
+                <Image
+                  width={100}
+                  height={100}
+                  src={URL.createObjectURL(eventImage)}
+                  alt="Event Image"
+                  className="h-16 w-16 object-cover rounded-md"
+                />
+              </p>
+            )}
+          </div>
           {/* Location Selection */}
           <div className="space-y-1.5">
             <Label
@@ -275,7 +312,9 @@ export default function EventRegistrationForm() {
                     setTicketTypes(newTicketTypes);
                   }}
                 />
+                <Label htmlFor="price"> Price </Label>
                 <Input
+                  id="price"
                   type="number"
                   placeholder="Price"
                   value={ticket.price}
@@ -285,7 +324,10 @@ export default function EventRegistrationForm() {
                     setTicketTypes(newTicketTypes);
                   }}
                 />
+                <Label htmlFor="price"> Quantity </Label>
+
                 <Input
+                  id="quantity"
                   type="number"
                   placeholder="Quantity"
                   value={ticket.quantity}
@@ -351,18 +393,22 @@ export default function EventRegistrationForm() {
                   />
                 </div>
               </div>
+              {/** Seat Image Upload */}
               <div className="flex items-center gap-4">
                 <label
                   htmlFor="seat-image-upload"
                   className="cursor-pointer bg-gray-100 hover:bg-gray-200 p-2 rounded-md"
                 >
-                  <Upload className="h-5 w-5 text-gray-700" />
+                  <div className="flex gap-4">
+                    <Upload className="h-5 w-5 text-gray-700" />
+                    <p>Seat Image</p>
+                  </div>
                   <input
                     id="seat-image-upload"
                     type="file"
                     accept="image/*"
                     className="hidden"
-                    onChange={handleMediaUpload}
+                    onChange={handleSeatmapImageChange}
                   />
                 </label>
                 {seatImage && (

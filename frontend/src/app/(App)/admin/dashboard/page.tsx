@@ -2,6 +2,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { Calendar, Ticket, Users, AlertCircle, ArrowRight } from "lucide-react";
+import ProtectedRoute from "@/context/ProtectedRoute";
 //Todo: query parameter to add on the routes
 const adminCards = [
   {
@@ -44,62 +45,64 @@ const quickStats = [
 
 export default function AdminDashboard() {
   return (
-    <div className="p-6 lg:ml-[16rem] min-h-screen bg-MainPage-primary">
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold mb-2">Dashboard</h1>
-        <div className="flex flex-wrap gap-x-6 gap-y-3">
-          {quickStats.map((stat) => (
-            <div key={stat.label} className="flex flex-col min-w-[120px]">
-              <span className="text-sm text-muted-foreground">
-                {stat.label}
-              </span>
-              <span className="text-2xl font-medium">{stat.value}</span>
-            </div>
+    <ProtectedRoute allowedRoles={["admin"]}>
+      <div className="p-6 lg:ml-[16rem] min-h-screen bg-MainPage-primary">
+        <div className="mb-6">
+          <h1 className="text-2xl font-semibold mb-2">Dashboard</h1>
+          <div className="flex flex-wrap gap-x-6 gap-y-3">
+            {quickStats.map((stat) => (
+              <div key={stat.label} className="flex flex-col min-w-[120px]">
+                <span className="text-sm text-muted-foreground">
+                  {stat.label}
+                </span>
+                <span className="text-2xl font-medium">{stat.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Main Navigation Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          {adminCards.map((card) => (
+            <Link href={card.link} key={card.title}>
+              <Card className="border-none shadow-sm hover:shadow-md transition-all cursor-pointer h-full">
+                <CardContent className="p-5">
+                  <div
+                    className={`rounded-full w-10 h-10 flex items-center justify-center mb-3 ${card.color}`}
+                  >
+                    {card.icon}
+                  </div>
+                  <h3 className="text-base font-medium mb-1">{card.title}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {card.description}
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
         </div>
-      </div>
 
-      {/* Main Navigation Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        {adminCards.map((card) => (
-          <Link href={card.link} key={card.title}>
-            <Card className="border-none shadow-sm hover:shadow-md transition-all cursor-pointer h-full">
-              <CardContent className="p-5">
-                <div
-                  className={`rounded-full w-10 h-10 flex items-center justify-center mb-3 ${card.color}`}
-                >
-                  {card.icon}
-                </div>
-                <h3 className="text-base font-medium mb-1">{card.title}</h3>
+        {/* Only shown if there's a high priority alert */}
+        <Card className="border-none shadow-sm border-l-4 border-l-red-500">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <AlertCircle className="h-5 w-5 text-red-500" />
+              <div className="flex-1">
+                <h3 className="font-medium">Security Alert</h3>
                 <p className="text-sm text-muted-foreground">
-                  {card.description}
+                  Multiple failed login attempts detected
                 </p>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
-      </div>
-
-      {/* Only shown if there's a high priority alert */}
-      <Card className="border-none shadow-sm border-l-4 border-l-red-500">
-        <CardContent className="p-4">
-          <div className="flex items-center gap-3">
-            <AlertCircle className="h-5 w-5 text-red-500" />
-            <div className="flex-1">
-              <h3 className="font-medium">Security Alert</h3>
-              <p className="text-sm text-muted-foreground">
-                Multiple failed login attempts detected
-              </p>
+              </div>
+              <Link
+                href="/admin/security"
+                className="text-sm text-primary flex items-center"
+              >
+                View <ArrowRight className="ml-1 h-4 w-4" />
+              </Link>
             </div>
-            <Link
-              href="/admin/security"
-              className="text-sm text-primary flex items-center"
-            >
-              View <ArrowRight className="ml-1 h-4 w-4" />
-            </Link>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+          </CardContent>
+        </Card>
+      </div>
+    </ProtectedRoute>
   );
 }
